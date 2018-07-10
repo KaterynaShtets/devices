@@ -1,10 +1,11 @@
 <script>
-    function Device(power) {
+        function Device(power) {
         this._power = power;
+        this._enabled=false
+        var self=this
 
     }
-    Device.prototype._enabled = false;
-    Device.prototype.self = this;
+    
     Device.prototype.enable = function() {
         self._enabled = true;
     }
@@ -16,7 +17,12 @@
     function CoffeeMachine(power, capacity) {
         Device.apply(this, arguments);
         this._capacity = capacity;
+        this._waterAmount;
+        var timerId;
     }
+    CoffeeMachine.prototype = Object.create(Device.prototype)
+    CoffeeMachine.prototype.constructor = CoffeeMachine;
+    
     Device.prototype._powerValid = function(power) {
         if (typeof power === 'number') {
             this._power = power;
@@ -25,13 +31,10 @@
     Device.prototype.setPower = function(power) {
         Device.prototype._powerValid(power)
     }
-    CoffeeMachine.prototype = Object.create(Device.prototype)
-    CoffeeMachine.prototype.constructor = CoffeeMachine;
-    CoffeeMachine.prototype.waterAmount = 0;
-    CoffeeMachine.prototype.timerId;
+   
     CoffeeMachine.prototype._wateramountValid = function(amount) {
         if (typeof amount === 'number' && amount > 0 && amount < this._capacity) {
-            waterAmount = amount
+           this._waterAmount = amount
         }
     }
 
@@ -59,7 +62,7 @@
         timerId = setTimeout(this._onReady, 1000)
     }
     CoffeeMachine.prototype.addWater = function(amount) {
-        this.setWaterAmount(waterAmount + amount);
+        this.setWaterAmount(this._waterAmount + amount);
     }
     ;
     function Fridge(power) {
@@ -132,7 +135,7 @@
     var fridge = new Fridge(500);
 
     fridge.setPower(1000);
-    fridge.enable();
+    //fridge.enable();
     fridge.addFood("котлета");
     fridge.addFood("сок", "варенье");
     fridge.addFood("торт");
