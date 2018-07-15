@@ -15,9 +15,8 @@
        if (typeof power === 'number') {
            this._power = power;
        }
-   }
+   };
    Device.prototype.setPower = function (power) {
-
        this._powerValid(power);
    }
 
@@ -35,7 +34,6 @@
        if (typeof amount === 'number' && amount > 0 && amount < this._capacity) {
            this._waterAmount = amount
        }
-
    }
 
    CoffeeMachine.prototype.setWaterAmount = function (amount) {
@@ -56,10 +54,8 @@
        alert('Кофеварка остановлена')
    }
    CoffeeMachine.prototype._onReady = function () {
-
        alert('Готов кофе: ' + this._waterAmount + 'мл');
        // Готов кофе: 150 мл
-
    }
    CoffeeMachine.prototype.run = function () {
        if (!this._enabled) {
